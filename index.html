@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Administratora</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at top left, #252b55 0%, transparent 35%),
+                radial-gradient(circle at bottom right, #171b38 0%, transparent 40%),
+                #090b14;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 390px;
+            padding: 35px;
+            border: 1px solid rgba(255,255,255,.12);
+            border-radius: 24px;
+            background: rgba(20,23,38,.88);
+            box-shadow: 0 25px 70px rgba(0,0,0,.5);
+            backdrop-filter: blur(15px);
+        }
+
+        .logo {
+            width: 65px;
+            height: 65px;
+            margin: 0 auto 20px;
+            border-radius: 18px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #6d5dfc, #8b7cff);
+            font-size: 28px;
+            box-shadow: 0 10px 30px rgba(109,93,252,.35);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 25px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #969bb5;
+            font-size: 14px;
+            margin-bottom: 28px;
+        }
+
+        label {
+            display: block;
+            margin: 15px 0 7px;
+            color: #cdd0df;
+            font-size: 13px;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #30354f;
+            border-radius: 11px;
+            outline: none;
+            background: #101321;
+            color: white;
+            font-size: 14px;
+            transition: .2s;
+        }
+
+        input:focus {
+            border-color: #7165ff;
+            box-shadow: 0 0 0 3px rgba(113,101,255,.12);
+        }
+
+        button {
+            width: 100%;
+            border: none;
+            border-radius: 11px;
+            padding: 14px;
+            margin-top: 20px;
+            cursor: pointer;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+            background: linear-gradient(135deg, #6658f6, #8275ff);
+            transition: .2s;
+        }
+
+        button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 25px rgba(102,88,246,.3);
+        }
+
+        .error {
+            display: none;
+            margin-top: 15px;
+            padding: 11px;
+            border-radius: 9px;
+            text-align: center;
+            font-size: 13px;
+            color: #ff8e8e;
+            background: rgba(255,70,70,.08);
+        }
+
+        #adminPanel {
+            display: none;
+        }
+
+        .welcome {
+            padding: 16px;
+            border-radius: 12px;
+            background: #101321;
+            border: 1px solid #292e47;
+            margin-bottom: 18px;
+        }
+
+        .welcome small {
+            color: #858ba5;
+        }
+
+        .welcome strong {
+            display: block;
+            margin-top: 5px;
+            font-size: 18px;
+        }
+
+        .logout {
+            background: #24283b;
+            margin-top: 10px;
+        }
+
+        .logout:hover {
+            box-shadow: none;
+        }
+
+        .footer {
+            text-align: center;
+            color: #555b75;
+            font-size: 11px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- LOGOWANIE -->
+    <div class="container" id="loginPanel">
+
+        <div class="logo">🔐</div>
+
+        <h1>Panel Administratora</h1>
+        <p class="subtitle">Zaloguj się, aby kontynuować</p>
+
+        <label for="login">Login</label>
+        <input
+            id="login"
+            type="text"
+            placeholder="Wpisz login"
+            autocomplete="off"
+        >
+
+        <label for="password">Hasło</label>
+        <input
+            id="password"
+            type="password"
+            placeholder="Wpisz hasło"
+        >
+
+        <button onclick="loginUser()">ZALOGUJ SIĘ</button>
+
+        <div class="error" id="error">
+            Nieprawidłowy login lub hasło.
+        </div>
+
+        <div class="footer">
+            Panel administracyjny
+        </div>
+    </div>
+
+
+    <!-- PANEL ADMINA -->
+    <div class="container" id="adminPanel">
+
+        <div class="logo">👑</div>
+
+        <h1>Panel Administratora</h1>
+        <p class="subtitle">Zarządzanie systemem</p>
+
+        <div class="welcome">
+            <small>Zalogowano jako</small>
+            <strong>Admin1</strong>
+        </div>
+
+        <button onclick="createLogins()">
+            STWÓRZ LOGINY
+        </button>
+
+        <button class="logout" onclick="logout()">
+            WYLOGUJ SIĘ
+        </button>
+
+        <div class="footer">
+            Panel administracyjny
+        </div>
+    </div>
+
+
+    <script>
+        /*
+         * DEMO:
+         * To nie jest bezpieczny system logowania.
+         * Na GitHub Pages dane użyte przez JavaScript
+         * mogą zostać odczytane przez użytkownika.
+         */
+
+        function loginUser() {
+            const login = document.getElementById("login").value;
+            const password = document.getElementById("password").value;
+            const error = document.getElementById("error");
+
+            // DEMONSTRACYJNE dane logowania
+            if (login === "Admin1" && password === "admin1nve") {
+
+                document.getElementById("loginPanel").style.display = "none";
+                document.getElementById("adminPanel").style.display = "block";
+
+                error.style.display = "none";
+
+            } else {
+                error.style.display = "block";
+            }
+        }
+
+        function createLogins() {
+            alert("Panel tworzenia loginów zostanie tutaj dodany.");
+        }
+
+        function logout() {
+            document.getElementById("adminPanel").style.display = "none";
+            document.getElementById("loginPanel").style.display = "block";
+
+            document.getElementById("login").value = "";
+            document.getElementById("password").value = "";
+        }
+
+        document.getElementById("password").addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+                loginUser();
+            }
+        });
+    </script>
+
+</body>
+</html>
