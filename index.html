@@ -366,6 +366,59 @@ function escapeHTML(text){
 document.getElementById("password").addEventListener("keydown", function(e){
   if(e.key === "Enter") loginUser();
 });
+
+/* =====================================================
+   "BLOKADA" NARZĘDZI DEWELOPERSKICH
+   UWAGA: to tylko utrudnienie, NIE zabezpieczenie.
+   Da się to ominąć na kilka sposobów (m.in. podglądem
+   źródła strony Ctrl+U, pobraniem pliku, wyłączeniem JS,
+   dokowaniem DevTools w osobnym oknie). Prawdziwej
+   ochrony danych to nie zapewnia.
+   ===================================================== */
+(function(){
+  const THRESHOLD = 160;
+  let triggered = false;
+
+  function kick(){
+    if(triggered) return;
+    triggered = true;
+    location.reload();
+  }
+
+  // wykrywanie po różnicy rozmiaru okna (DevTools zadokowane)
+  setInterval(function(){
+    const widthDiff = window.outerWidth - window.innerWidth;
+    const heightDiff = window.outerHeight - window.innerHeight;
+    if(widthDiff > THRESHOLD || heightDiff > THRESHOLD){
+      kick();
+    }
+  }, 500);
+
+  // pułapka na "debugger" (spowalnia otwarte DevTools)
+  setInterval(function(){
+    const start = performance.now();
+    // eslint-disable-next-line no-debugger
+    debugger;
+    const diff = performance.now() - start;
+    if(diff > 100){
+      kick();
+    }
+  }, 1000);
+
+  // blokada prawego przycisku myszy i skrótów do DevTools
+  document.addEventListener("contextmenu", e => e.preventDefault());
+  document.addEventListener("keydown", function(e){
+    const key = e.key ? e.key.toUpperCase() : "";
+    if(
+      key === "F12" ||
+      (e.ctrlKey && e.shiftKey && (key === "I" || key === "J" || key === "C")) ||
+      (e.ctrlKey && key === "U")
+    ){
+      e.preventDefault();
+      kick();
+    }
+  });
+})();
 </script>
 </body>
 </html>
