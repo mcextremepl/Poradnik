@@ -4,270 +4,523 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>MCEXTREME.PL — Panel</title>
+<!-- Google Fonts: Poppins -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<!-- Phosphor Icons (Nowoczesne ikony zamiast emotek) -->
+<script src="https://unpkg.com/@phosphor-icons/web"></script>
 <style>
-  :root{
-    --bg1:#1a0505;
-    --bg2:#2b0808;
-    --panel:rgba(20,8,10,.92);
-    --border:rgba(255,80,80,.18);
-    --red:#ff3b3b;
-    --red2:#ff6b4a;
-    --text:#fff;
-    --muted:#c99;
+  :root {
+    --bg-main: #0a0505;
+    --bg-panel: rgba(18, 9, 9, 0.75);
+    --border: rgba(255, 60, 60, 0.15);
+    --border-glow: rgba(255, 60, 60, 0.4);
+    --red-primary: #ff2a2a;
+    --red-secondary: #ff5e3a;
+    --text-main: #ffffff;
+    --text-muted: #a88a8a;
+    --input-bg: rgba(25, 12, 12, 0.8);
+    --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   }
-  *{box-sizing:border-box;margin:0;padding:0;font-family:Inter,Arial,sans-serif;}
-  html,body{height:100%;}
-  body{
-    min-height:100vh;
-    background:
-      radial-gradient(circle at 10% 10%, #4a0d0d 0, transparent 40%),
-      radial-gradient(circle at 90% 90%, #3a1006 0, transparent 40%),
-      #0a0303;
-    color:var(--text);
-    display:flex;justify-content:center;align-items:center;
-    padding:20px;
+  
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
   }
-  .box{
-    width:100%;max-width:430px;
-    background:var(--panel);
-    border:1px solid var(--border);
-    border-radius:24px;
-    padding:32px;
-    box-shadow:0 25px 80px rgba(0,0,0,.6), 0 0 60px rgba(255,50,50,.08);
-    backdrop-filter:blur(20px);
-    animation:fadeIn .35s ease;
+  
+  body {
+    min-height: 100vh;
+    background: 
+      radial-gradient(circle at 15% 20%, rgba(74, 13, 13, 0.4) 0, transparent 40%),
+      radial-gradient(circle at 85% 80%, rgba(58, 16, 6, 0.4) 0, transparent 40%),
+      var(--bg-main);
+    background-attachment: fixed;
+    color: var(--text-main);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
   }
-  @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-  .logo{
-    width:70px;height:70px;margin:0 auto 20px;border-radius:20px;
-    display:flex;align-items:center;justify-content:center;font-size:32px;
-    background:linear-gradient(135deg,#ff3b3b,#ff8a5c);
-    box-shadow:0 10px 35px rgba(255,59,59,.35);
-  }
-  .brand-row{
-    display:flex;align-items:center;justify-content:center;gap:12px;
-    margin-bottom:6px;
-  }
-  .pixel-heart{
-    width:46px;height:46px;flex-shrink:0;
-    filter:drop-shadow(0 0 10px rgba(255,50,50,.55));
-    animation:heartbeat 1.4s ease-in-out infinite;
-  }
-  @keyframes heartbeat{
-    0%,100%{transform:scale(1);}
-    15%{transform:scale(1.16);}
-    30%{transform:scale(.96);}
-    45%{transform:scale(1.1);}
-    60%{transform:scale(1);}
-  }
-  .brand-text{text-align:left;}
-  .brand-text h1{font-size:22px;letter-spacing:.3px;margin:0;line-height:1.15;
-    background:linear-gradient(135deg,#ff5c5c,#ff9a5c);
-    -webkit-background-clip:text;background-clip:text;color:transparent;
-  }
-  .brand-text .brand-sub{font-size:11px;color:#c99;letter-spacing:1.5px;text-transform:uppercase;margin-top:2px;}
-  h1{text-align:center;font-size:25px;margin-bottom:7px;letter-spacing:.3px;}
-  .subtitle{text-align:center;color:var(--muted);font-size:14px;margin-bottom:28px;}
-  label{display:block;color:#e8c9c9;font-size:13px;margin:15px 0 7px;}
-  input{
-    width:100%;padding:14px;background:#160707;color:#fff;
-    border:1px solid #4a1a1a;border-radius:11px;outline:none;font-size:14px;
-  }
-  input:focus{border-color:var(--red);box-shadow:0 0 0 3px rgba(255,59,59,.15);}
-  button{
-    width:100%;padding:14px;margin-top:20px;border:0;border-radius:11px;
-    background:linear-gradient(135deg,#ff3b3b,#ff7a4a);
-    color:#fff;font-weight:700;cursor:pointer;transition:.2s;
-    letter-spacing:.3px;
-  }
-  button:hover{transform:translateY(-1px);box-shadow:0 8px 25px rgba(255,59,59,.35);}
-  .secondary{background:#241010;}
-  .error{
-    display:none;margin-top:15px;padding:11px;border-radius:10px;
-    background:rgba(255,60,60,.12);color:#ff9d9d;text-align:center;font-size:13px;
-  }
-  .success{
-    display:none;margin-top:15px;padding:11px;border-radius:10px;
-    background:rgba(70,255,150,.08);color:#7cffb0;text-align:center;font-size:13px;
-  }
-  #adminPanel,#createPanel,#welcomePanel{display:none;}
-.block-box{
-  text-align:center;padding:10px;
-}
-.block-icon{
-  width:86px;height:86px;margin:0 auto 18px;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;font-size:40px;
-  background:radial-gradient(circle,#ff3b3b,#5c0000);
-  animation:shake .5s ease, pop .4s ease;
-}
-@keyframes shake{
-  0%,100%{transform:translateX(0)}
-  20%{transform:translateX(-8px)}
-  40%{transform:translateX(8px)}
-  60%{transform:translateX(-6px)}
-  80%{transform:translateX(6px)}
-}
-.block-title{
-  font-size:24px;font-weight:800;color:#ff5c5c;margin-bottom:10px;
-}
-.block-sub{color:#e8c9c9;font-size:14px;line-height:1.6;margin-bottom:20px;}
-  .user-card{
-    background:#160707;border:1px solid #3a1414;border-radius:12px;
-    padding:14px;margin-top:10px;display:flex;justify-content:space-between;align-items:center;
-  }
-  .user-card strong{display:block;font-size:15px;}
-  .user-card span{display:block;color:#c99;font-size:12px;margin-top:4px;}
-  .welcome{padding:15px;border-radius:12px;background:#160707;border:1px solid #3a1414;margin-bottom:10px;}
-  .welcome small{color:#c99;}
-  .welcome strong{display:block;margin-top:4px;}
-  .section-title{margin-top:25px;margin-bottom:10px;font-size:14px;color:#e8c9c9;}
-  .footer{text-align:center;color:#5c3535;font-size:11px;margin-top:22px;}
 
-  /* welcome / powitanie */
-  .welcome-box{
-    text-align:center;padding:20px 10px;
+  /* Efekt siatki w tle */
+  body::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 30px 30px;
+    z-index: -1;
+    pointer-events: none;
   }
-  .welcome-icon{
-    width:86px;height:86px;margin:0 auto 18px;border-radius:50%;
-    display:flex;align-items:center;justify-content:center;font-size:40px;
-    background:radial-gradient(circle,#ff3b3b,#8a0f0f);
-    box-shadow:0 0 0 0 rgba(255,59,59,.5);
-    animation:pulse 1.6s ease-out infinite, pop .5s ease;
+
+  .box {
+    width: 100%;
+    max-width: 440px;
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 40px 35px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    animation: slideUpFade 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  @keyframes pop{0%{transform:scale(0);opacity:0}70%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}
-  @keyframes pulse{
-    0%{box-shadow:0 0 0 0 rgba(255,59,59,.45);}
-    70%{box-shadow:0 0 0 22px rgba(255,59,59,0);}
-    100%{box-shadow:0 0 0 0 rgba(255,59,59,0);}
+
+  @keyframes slideUpFade {
+    0% { opacity: 0; transform: translateY(20px) scale(0.98); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
   }
-  .welcome-title{
-    font-size:28px;font-weight:800;
-    background:linear-gradient(135deg,#ff5c5c,#ff9a5c);
-    -webkit-background-clip:text;background-clip:text;color:transparent;
-    margin-bottom:10px;
-    animation:slideUp .5s ease .1s both;
+
+  .icon-wrapper {
+    width: 72px;
+    height: 72px;
+    margin: 0 auto 24px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    color: #fff;
+    background: linear-gradient(135deg, var(--red-primary), var(--red-secondary));
+    box-shadow: 0 12px 35px rgba(255, 42, 42, 0.3), 
+                inset 0 2px 0 rgba(255, 255, 255, 0.2);
+    position: relative;
   }
-  .welcome-sub{color:#e8c9c9;font-size:14px;line-height:1.6;margin-bottom:6px;
-    animation:slideUp .5s ease .2s both;}
-  .welcome-badge{
-    display:inline-block;margin-top:14px;padding:7px 14px;border-radius:999px;
-    background:rgba(255,90,60,.12);border:1px solid rgba(255,90,60,.3);
-    color:#ffab8a;font-size:12px;letter-spacing:.4px;
-    animation:slideUp .5s ease .3s both;
+
+  .icon-wrapper::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 24px;
+    border: 1px solid var(--border-glow);
+    animation: pulseGlow 2s infinite alternate;
   }
-  @keyframes slideUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-  .bar{
-    height:6px;width:100%;background:#2a0f0f;border-radius:999px;margin-top:18px;overflow:hidden;
-    animation:slideUp .5s ease .35s both;
+
+  @keyframes pulseGlow {
+    0% { opacity: 0.3; transform: scale(1); }
+    100% { opacity: 0.8; transform: scale(1.05); }
   }
-  .bar-fill{
-    height:100%;width:38%;border-radius:999px;
-    background:linear-gradient(90deg,#ff3b3b,#ff9a5c);
-    animation:grow 2.4s ease-in-out infinite alternate;
+
+  h1 {
+    text-align: center;
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    letter-spacing: 0.5px;
+    background: linear-gradient(135deg, #ffffff, #ffb3b3);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
-  @keyframes grow{from{width:22%}to{width:62%}}
+
+  .subtitle {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 14px;
+    font-weight: 400;
+    margin-bottom: 35px;
+  }
+
+  .input-group {
+    position: relative;
+    margin-bottom: 20px;
+  }
+
+  .input-group i {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    font-size: 20px;
+    transition: var(--transition);
+  }
+
+  input, select {
+    width: 100%;
+    padding: 15px 15px 15px 48px;
+    background: var(--input-bg);
+    color: var(--text-main);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    outline: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: var(--transition);
+    appearance: none;
+  }
+
+  input:focus, select:focus {
+    border-color: var(--red-primary);
+    background: rgba(30, 15, 15, 0.9);
+    box-shadow: 0 0 0 4px rgba(255, 42, 42, 0.15);
+  }
+
+  input:focus + i, .input-group input:focus ~ i {
+    color: var(--red-primary);
+  }
+
+  button {
+    width: 100%;
+    padding: 16px;
+    margin-top: 15px;
+    border: 0;
+    border-radius: 14px;
+    background: linear-gradient(135deg, var(--red-primary), var(--red-secondary));
+    color: #fff;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    transition: var(--transition);
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 8px 25px rgba(255, 42, 42, 0.25);
+  }
+
+  button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(255, 42, 42, 0.4);
+    filter: brightness(1.1);
+  }
+
+  button:active {
+    transform: translateY(1px);
+  }
+
+  button.secondary {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: none;
+    color: #d9baba;
+  }
+
+  button.secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+  }
+
+  .error, .success {
+    display: none;
+    margin-top: 20px;
+    padding: 14px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 500;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    animation: slideUpFade 0.3s ease;
+  }
+
+  .error {
+    background: rgba(255, 60, 60, 0.1);
+    border: 1px solid rgba(255, 60, 60, 0.2);
+    color: #ff8585;
+  }
+
+  .success {
+    background: rgba(46, 213, 115, 0.1);
+    border: 1px solid rgba(46, 213, 115, 0.2);
+    color: #5cf296;
+  }
+
+  #adminPanel, #createPanel, #welcomePanel, #testPanel { display: none; }
+
+  /* Lista użytkowników */
+  .section-title {
+    margin: 30px 0 15px;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .user-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: var(--transition);
+  }
+
+  .user-card:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .user-card strong {
+    display: block;
+    font-size: 15px;
+    color: #fff;
+  }
+
+  .user-card span {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--text-muted);
+    font-size: 12px;
+    margin-top: 4px;
+  }
+
+  .user-card .role-icon {
+    font-size: 14px;
+  }
+  .role-admin { color: #ffb347; }
+  .role-user { color: #64b5f6; }
+
+  .footer {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.2);
+    font-size: 11px;
+    margin-top: 30px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+
+  /* Specjalny panel testera */
+  .instructions-box {
+    background: rgba(20, 20, 30, 0.5);
+    border: 1px solid rgba(100, 150, 255, 0.2);
+    border-radius: 14px;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: left;
+  }
+
+  .instructions-box h3 {
+    color: #99c2ff;
+    font-size: 15px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .instructions-box p {
+    color: #d1e0ff;
+    font-size: 13px;
+    line-height: 1.6;
+    margin-bottom: 15px;
+  }
+
+  .shortcut-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .shortcut-list li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    font-size: 13px;
+    color: #fff;
+  }
+
+  kbd {
+    background: #2a2a35;
+    border: 1px solid #444455;
+    border-radius: 4px;
+    padding: 3px 8px;
+    font-family: monospace;
+    font-size: 12px;
+    color: #a3c2ff;
+    box-shadow: 0 2px 0 rgba(0,0,0,0.5);
+  }
+  
+  .feedback-note {
+    margin-top: 15px;
+    padding: 12px;
+    background: rgba(255, 171, 64, 0.1);
+    border-left: 3px solid #ffab40;
+    border-radius: 4px 8px 8px 4px;
+    font-size: 13px;
+    color: #ffe0b2;
+  }
 </style>
 </head>
 <body>
 
 <!-- ============== LOGOWANIE ============== -->
 <div class="box" id="loginPanel">
-  <div class="logo">🔐</div>
+  <div class="icon-wrapper">
+    <i class="ph ph-shield-check"></i>
+  </div>
   <h1>MCEXTREME.PL</h1>
-  <p class="subtitle">Panel dostępu</p>
+  <p class="subtitle">Panel dostępu do systemu</p>
 
-  <label for="login">Login</label>
-  <input id="login" type="text" placeholder="Wpisz login" autocomplete="username">
+  <div class="input-group">
+    <input id="login" type="text" placeholder="Nazwa użytkownika" autocomplete="username">
+    <i class="ph ph-user"></i>
+  </div>
 
-  <label for="password">Hasło</label>
-  <input id="password" type="password" placeholder="Wpisz hasło" autocomplete="current-password">
+  <div class="input-group">
+    <input id="password" type="password" placeholder="Hasło dostępowe" autocomplete="current-password">
+    <i class="ph ph-lock-key"></i>
+  </div>
 
-  <button onclick="loginUser()">ZALOGUJ SIĘ</button>
+  <button onclick="loginUser()">
+    ZALOGUJ SIĘ <i class="ph ph-arrow-right"></i>
+  </button>
 
-  <div class="error" id="loginError">Nieprawidłowy login lub hasło.</div>
+  <div class="error" id="loginError" style="display: none;">
+    <i class="ph ph-warning-circle"></i> Błędny login lub hasło.
+  </div>
 
-  <div class="footer">MCEXTREME.PL</div>
+  <div class="footer">MCEXTREME.PL &copy; 2026</div>
 </div>
 
 <!-- ============== POWITANIE (zwykły user) ============== -->
 <div class="box" id="welcomePanel">
-  <div class="welcome-box">
-    <div class="welcome-icon">👋</div>
-    <div class="welcome-title">Witamy!</div>
-    <p class="welcome-sub">Zalogowano jako <strong id="welcomeUser"></strong>.</p>
-    <p class="welcome-sub">Strona jest obecnie w trakcie tworzenia — pracujemy nad tym, żeby wszystko działało jak należy. Zajrzyj tu ponownie wkrótce!</p>
-    <span class="welcome-badge">🚧 W BUDOWIE</span>
-    <div class="bar"><div class="bar-fill"></div></div>
+  <div class="icon-wrapper" style="background: linear-gradient(135deg, #2a8bff, #00e1ff); box-shadow: 0 12px 35px rgba(42, 139, 255, 0.3);">
+    <i class="ph ph-hand-waving"></i>
   </div>
-  <button class="secondary" onclick="logout()" style="margin-top:22px;">WYLOGUJ SIĘ</button>
+  <h1>Witaj, <span id="welcomeUser" style="color: #64b5f6;"></span>!</h1>
+  <p class="subtitle">Pomyślnie zalogowano do systemu.</p>
+  
+  <div style="text-align: center; margin: 30px 0; padding: 20px; background: rgba(255,255,255,0.03); border-radius: 16px; border: 1px dashed rgba(255,255,255,0.1);">
+    <i class="ph ph-barricade" style="font-size: 48px; color: #ffab40; margin-bottom: 10px;"></i>
+    <p style="font-size: 14px; color: #e0e0e0; line-height: 1.6;">Strona znajduje się w fazie deweloperskiej.<br>Zajrzyj ponownie wkrótce.</p>
+  </div>
+
+  <button class="secondary" onclick="logout()">
+    <i class="ph ph-sign-out"></i> WYLOGUJ SIĘ
+  </button>
+</div>
+
+<!-- ============== PANEL TESTERA (testmef) ============== -->
+<div class="box" id="testPanel">
+  <div class="icon-wrapper" style="background: linear-gradient(135deg, #7c4dff, #b388ff); box-shadow: 0 12px 35px rgba(124, 77, 255, 0.3);">
+    <i class="ph ph-bug-beetle"></i>
+  </div>
+  <h1>Panel QA</h1>
+  <p class="subtitle">Zalogowano jako <strong>testmef</strong></p>
+
+  <div class="instructions-box">
+    <h3><i class="ph ph-target"></i> Misja Testowa</h3>
+    <p>System posiada podstawowe blokady DevTools. Twoim zadaniem jest sprawdzenie, czy dasz radę zbadac elementy strony mimo zabezpieczeń.</p>
+    
+    <ul class="shortcut-list">
+      <li>
+        <span><i class="ph ph-terminal-window"></i> Konsola DevTools</span>
+        <kbd>F12</kbd>
+      </li>
+      <li>
+        <span><i class="ph ph-code"></i> Inspektor Elementów</span>
+        <kbd>Ctrl + Shift + I</kbd>
+      </li>
+      <li>
+        <span><i class="ph ph-cursor-click"></i> Wybór Elementu</span>
+        <kbd>Ctrl + Shift + C</kbd>
+      </li>
+      <li>
+        <span><i class="ph ph-mouse"></i> Menu Kontekstowe</span>
+        <span>PPM ➔ Zbadaj</span>
+      </li>
+    </ul>
+
+    <div class="feedback-note">
+      <i class="ph ph-paper-plane-tilt"></i> <strong>Zadanie:</strong> Po testach, wyślij szczegółowy feedback do <strong>nve</strong> z informacją jakich metod użyłeś do obejścia skryptu.
+    </div>
+  </div>
+
+  <button class="secondary" onclick="logout()">
+    <i class="ph ph-sign-out"></i> WYLOGUJ SIĘ
+  </button>
 </div>
 
 <!-- ============== PANEL ADMINA ============== -->
 <div class="box" id="adminPanel">
-  <div class="logo">👑</div>
-  <h1>Panel Administratora</h1>
-  <p class="subtitle">Zarządzanie użytkownikami</p>
-
-  <div class="welcome">
-    <small>Zalogowano jako</small>
-    <strong id="loggedUser"></strong>
+  <div class="icon-wrapper" style="background: linear-gradient(135deg, #ffab40, #ff6d00); box-shadow: 0 12px 35px rgba(255, 171, 64, 0.3);">
+    <i class="ph ph-crown"></i>
   </div>
+  <h1>Panel Administratora</h1>
+  <p class="subtitle">Zalogowano jako <strong id="loggedUser" style="color: #ffab40;"></strong></p>
 
-  <button onclick="showCreatePanel()">STWÓRZ LOGIN</button>
+  <button onclick="showCreatePanel()">
+    <i class="ph ph-user-plus"></i> STWÓRZ KONTO
+  </button>
 
-  <div class="section-title">Istniejące konta</div>
-  <div id="usersList"></div>
+  <div class="section-title">
+    <i class="ph ph-users"></i> Baza użytkowników
+  </div>
+  <div id="usersList" style="max-height: 250px; overflow-y: auto; padding-right: 5px;"></div>
 
-  <button class="secondary" onclick="logout()">WYLOGUJ SIĘ</button>
-
-  <div class="footer">Panel administratora</div>
+  <button class="secondary" onclick="logout()" style="margin-top: 20px;">
+    <i class="ph ph-sign-out"></i> WYLOGUJ SIĘ
+  </button>
 </div>
 
 <!-- ============== TWORZENIE LOGINU ============== -->
 <div class="box" id="createPanel">
-  <div class="logo">➕</div>
-  <h1>Nowy użytkownik</h1>
-  <p class="subtitle">Dodaj konto do systemu</p>
+  <div class="icon-wrapper" style="background: linear-gradient(135deg, #00c853, #69f0ae); box-shadow: 0 12px 35px rgba(0, 200, 83, 0.3);">
+    <i class="ph ph-user-plus"></i>
+  </div>
+  <h1>Nowe Konto</h1>
+  <p class="subtitle">Dodawanie użytkownika do systemu</p>
 
-  <label for="newLogin">Login</label>
-  <input id="newLogin" type="text" placeholder="Np. Support1">
+  <div class="input-group">
+    <input id="newLogin" type="text" placeholder="Nazwa użytkownika">
+    <i class="ph ph-identification-card"></i>
+  </div>
 
-  <label for="newPassword">Hasło</label>
-  <input id="newPassword" type="password" placeholder="Hasło użytkownika">
+  <div class="input-group">
+    <input id="newPassword" type="password" placeholder="Hasło dostępowe">
+    <i class="ph ph-key"></i>
+  </div>
 
-  <label for="newAdmin">Typ konta</label>
-  <select id="newAdmin" style="width:100%;padding:14px;border-radius:11px;border:1px solid #4a1a1a;background:#160707;color:white;outline:none;">
-    <option value="false">Użytkownik</option>
-    <option value="true">Administrator</option>
-  </select>
+  <div class="input-group">
+    <select id="newAdmin">
+      <option value="false">Standardowy Użytkownik</option>
+      <option value="true">Administrator</option>
+    </select>
+    <i class="ph ph-shield"></i>
+  </div>
 
-  <button onclick="createUser()">UTWÓRZ KONTO</button>
-  <button class="secondary" onclick="showAdminPanel()">WRÓĆ</button>
+  <button onclick="createUser()">
+    <i class="ph ph-check-circle"></i> UTWÓRZ KONTO
+  </button>
+  <button class="secondary" onclick="showAdminPanel()">
+    <i class="ph ph-arrow-left"></i> POWRÓT
+  </button>
 
-  <div class="error" id="createError"></div>
-  <div class="success" id="createSuccess"></div>
-
-  <div class="footer">Nowe konto zostanie dodane do bieżącej sesji.</div>
+  <div class="error" id="createError" style="display: none;"></div>
+  <div class="success" id="createSuccess" style="display: none;"></div>
 </div>
 
 <script>
-/* =====================================================
-   KONTA — zakodowane (Base64), NIE jest to prawdziwe
-   zabezpieczenie: to tylko utrudnienie odczytu "na oko"
-   w źródle strony. Każdy kto zna Base64 (albo wklei ten
-   tekst do dowolnego dekodera) odczyta loginy i hasła.
-   Prawdziwe bezpieczeństwo wymaga logowania po stronie
-   serwera (backend + baza danych), nie samego HTML/JS.
-   ===================================================== */
-const ENCODED_USERS =
-"W3sibG9naW4iOiAiQWRtaW4xIiwgInBhc3N3b3JkIjogImFkbWluMW52ZSIsICJhZG1pbiI6IHRydWV9LCB7ImxvZ2luIjogIm52ZWlzayIsICJwYXNzd29yZCI6ICJHaWNOTmw5MEVZU2NWNWYyIiwgImFkbWluIjogZmFsc2V9LCB7ImxvZ2luIjogIncxZWxvbyIsICJwYXNzd29yZCI6ICJYazkydFFtUnBMNXZOYzNCIiwgImFkbWluIjogZmFsc2V9LCB7ImxvZ2luIjogImRva25lcyIsICJwYXNzd29yZCI6ICJSdDdmV25LcFhtNExkOVFhIiwgImFkbWluIjogZmFsc2V9LCB7ImxvZ2luIjogInhrcmVka2EiLCAicGFzc3dvcmQiOiAiVmIzblpxOFRrUHc1Um1YYyIsICJhZG1pbiI6IGZhbHNlfSwgeyJsb2dpbiI6ICJzaW0wbmVrayIsICJwYXNzd29yZCI6ICJKZjZtUXIyV25UazlCcExjIiwgImFkbWluIjogZmFsc2V9LCB7ImxvZ2luIjogInZpcGVyZWsiLCAicGFzc3dvcmQiOiAiTnE0eFJ0N1ZtWmszUHdYZCIsICJhZG1pbiI6IGZhbHNlfSwgeyJsb2dpbiI6ICJsaXdrYSIsICJwYXNzd29yZCI6ICJLcDlXbVRyNU5jUXoyVmZiIiwgImFkbWluIjogZmFsc2V9LCB7ImxvZ2luIjogIkltYWdlIiwgInBhc3N3b3JkIjogIkh0M21ScThYd1BuNkxrVmMiLCAiYWRtaW4iOiBmYWxzZX0sIHsibG9naW4iOiAidGVzdG1lZiIsICJwYXNzd29yZCI6ICJ0ZXN0b3dlaGFzbG8iLCAiYWRtaW4iOiBmYWxzZSwgInRlc3QiOiB0cnVlfV0=";
+const ENCODED_USERS = "W3sibG9naW4iOiAiQWRtaW4xIiwgInBhc3N3b3JkIjogImFkbWluMW52ZSIsICJhZG1pbiI6IHRydWV9LCB7ImxvZ2luIjogIm52ZWlzayIsICJwYXNzd29yZCI6ICJHaWNOTmw5MEVZU2NWNWYyIiwgImFkbWluIjogZmFsc2V9LCB7ImxvZ2luIjogIncxZWxvbyIsICJwYXNzd29yZCI6ICJYazkydFFtUnBMNXZOYzNCIiwgImFkbWluIjogZmFsc2V9LCB7ImxvZ2luIjogImRva25lcyIsICJwYXNzd29yZCI6ICJSdDdmV25LcFhtNExkOVFhIiwgImFkbWluIjogZmFsc2V9LCB7ImxvZ2luIjogInhrcmVka2EiLCAicGFzc3dvcmQiOiAiVmIzblpxOFRrUHc1Um1YYyIsICJhZG1pbiI6IGZhbHNlfSwgeyJsb2dpbiI6ICJzaW0wbmVrayIsICJwYXNzd29yZCI6ICJKZjZtUXIyV25UazlCcExjIiwgImFkbWluIjogZmFsc2V9LCB7ImxvZ2luIjogInZpcGVyZWsiLCAicGFzc3dvcmQiOiAiTnE0eFJ0N1ZtWmszUHdYZCIsICJhZG1pbiI6IGZhbHNlfSwgeyJsb2dpbiI6ICJsaXdrYSIsICJwYXNzd29yZCI6ICJLcDlXbVRyNU5jUXoyVmZiIiwgImFkbWluIjogZmFsc2V9LCB7ImxvZ2luIjogIkltYWdlIiwgInBhc3N3b3JkIjogIkh0M21ScThYd1BuNkxrVmMiLCAiYWRtaW4iOiBmYWxzZX0sIHsibG9naW4iOiAidGVzdG1lZiIsICJwYXNzd29yZCI6ICJ0ZXN0b3dlaGFzbG8iLCAiYWRtaW4iOiBmYWxzZSwgInRlc3QiOiB0cnVlfV0=";
 
-function decodeUsers(){
-  try{
+function decodeUsers() {
+  try {
     const json = decodeURIComponent(escape(atob(ENCODED_USERS)));
     return JSON.parse(json);
-  }catch(e){
-    console.error("Błąd dekodowania kont:", e);
+  } catch(e) {
+    console.error("Błąd dekodowania:", e);
     return [];
   }
 }
@@ -275,103 +528,93 @@ function decodeUsers(){
 let USERS = decodeUsers();
 let currentUser = null;
 
-/* =====================================================
-   ANTY-SPAM — ochrona przed szybkim klikaniem
-   (podstawowa, tylko po stronie przeglądarki)
-   ===================================================== */
 let attemptTimestamps = [];
-const SPAM_LIMIT = 5;        // ile prób
-const SPAM_WINDOW_MS = 2500; // w jakim czasie (ms)
-const BLOCK_DURATION_MS = 15000; // jak długo blokujemy
+const SPAM_LIMIT = 5;
+const SPAM_WINDOW_MS = 2500;
+const BLOCK_DURATION_MS = 15000;
+const BLOCK_PAGE = "zablokowano.html";
 
-function registerAttempt(){
+function registerAttempt() {
   const now = Date.now();
   attemptTimestamps.push(now);
   attemptTimestamps = attemptTimestamps.filter(t => now - t <= SPAM_WINDOW_MS);
-
-  if(attemptTimestamps.length >= SPAM_LIMIT){
+  if(attemptTimestamps.length >= SPAM_LIMIT) {
     showBlockPanel();
     return false;
   }
   return true;
 }
 
-// Strona ostrzegawcza — musi leżeć w tym samym folderze co panel.html
-const BLOCK_PAGE = "zablokowano.html";
-
-function showBlockPanel(){
+function showBlockPanel() {
   attemptTimestamps = [];
   window.location.href = BLOCK_PAGE;
 }
 
-/* ================= LOGOWANIE ================= */
-function loginUser(){
+function loginUser() {
   if(!registerAttempt()) return;
 
   const loginInput = document.getElementById("login").value.trim();
   const passwordInput = document.getElementById("password").value;
   const loginLower = loginInput.toLowerCase();
 
-  const user = USERS.find(u =>
-    u.login.toLowerCase() === loginLower &&
-    u.password === passwordInput
-  );
-
+  const user = USERS.find(u => u.login.toLowerCase() === loginLower && u.password === passwordInput);
   const error = document.getElementById("loginError");
 
-  if(!user){
-    error.style.display = "block";
+  if(!user) {
+    error.innerHTML = '<i class="ph ph-warning-circle"></i> Błędny login lub hasło.';
+    error.style.display = "flex";
     return;
   }
 
   error.style.display = "none";
   currentUser = user;
-
   document.getElementById("loginPanel").style.display = "none";
 
-  if(user.admin){
+  if(user.admin) {
     document.getElementById("adminPanel").style.display = "block";
     document.getElementById("loggedUser").textContent = user.login;
     updateUsersList();
+  } else if (user.login.toLowerCase() === "testmef" || user.test) {
+    // SPECJALNY PANEL DLA TESTERA
+    document.getElementById("testPanel").style.display = "block";
   } else {
     document.getElementById("welcomeUser").textContent = user.login;
     document.getElementById("welcomePanel").style.display = "block";
   }
 }
 
-/* ================= LISTA UŻYTKOWNIKÓW ================= */
-function updateUsersList(){
+function updateUsersList() {
   const list = document.getElementById("usersList");
   list.innerHTML = "";
 
   USERS.forEach(user => {
     const card = document.createElement("div");
     card.className = "user-card";
+    const icon = user.admin ? '<i class="ph ph-crown role-admin"></i> Administrator' : '<i class="ph ph-user role-user"></i> Użytkownik';
     card.innerHTML = `
       <div>
         <strong>${escapeHTML(user.login)}</strong>
-        <span>${user.admin ? "👑 Administrator" : "👤 Użytkownik"}</span>
+        <span>${icon}</span>
       </div>
     `;
     list.appendChild(card);
   });
 }
 
-/* ================= TWORZENIE KONTA ================= */
-function showCreatePanel(){
+function showCreatePanel() {
   if(!currentUser || !currentUser.admin) return;
   document.getElementById("adminPanel").style.display = "none";
   document.getElementById("createPanel").style.display = "block";
   clearMessages();
 }
 
-function showAdminPanel(){
+function showAdminPanel() {
   document.getElementById("createPanel").style.display = "none";
   document.getElementById("adminPanel").style.display = "block";
   updateUsersList();
 }
 
-function createUser(){
+function createUser() {
   if(!currentUser || !currentUser.admin) return;
 
   const login = document.getElementById("newLogin").value.trim();
@@ -383,79 +626,62 @@ function createUser(){
   error.style.display = "none";
   success.style.display = "none";
 
-  if(login.length < 3){
-    error.textContent = "Login musi mieć minimum 3 znaki.";
-    error.style.display = "block";
-    return;
+  if(login.length < 3) {
+    error.innerHTML = '<i class="ph ph-warning"></i> Login musi mieć minimum 3 znaki.';
+    error.style.display = "flex"; return;
   }
-  if(password.length < 4){
-    error.textContent = "Hasło musi mieć minimum 4 znaki.";
-    error.style.display = "block";
-    return;
+  if(password.length < 4) {
+    error.innerHTML = '<i class="ph ph-warning"></i> Hasło musi mieć minimum 4 znaki.';
+    error.style.display = "flex"; return;
   }
-  const exists = USERS.some(u => u.login.toLowerCase() === login.toLowerCase());
-  if(exists){
-    error.textContent = "Taki login już istnieje.";
-    error.style.display = "block";
-    return;
+  if(USERS.some(u => u.login.toLowerCase() === login.toLowerCase())) {
+    error.innerHTML = '<i class="ph ph-warning"></i> Taki login już istnieje.';
+    error.style.display = "flex"; return;
   }
 
   USERS.push({login, password, admin: isAdmin});
-
-  success.textContent = "Konto " + login + " zostało utworzone.";
-  success.style.display = "block";
+  success.innerHTML = `<i class="ph ph-check-circle"></i> Konto ${escapeHTML(login)} zostało utworzone.`;
+  success.style.display = "flex";
 
   document.getElementById("newLogin").value = "";
   document.getElementById("newPassword").value = "";
   updateUsersList();
 }
 
-/* ================= WYLOGOWANIE ================= */
-function logout(){
+function logout() {
   currentUser = null;
   document.getElementById("adminPanel").style.display = "none";
   document.getElementById("createPanel").style.display = "none";
   document.getElementById("welcomePanel").style.display = "none";
+  document.getElementById("testPanel").style.display = "none";
   document.getElementById("loginPanel").style.display = "block";
   document.getElementById("login").value = "";
   document.getElementById("password").value = "";
   clearMessages();
 }
 
-function clearMessages(){
+function clearMessages() {
   document.getElementById("createError").style.display = "none";
   document.getElementById("createSuccess").style.display = "none";
+  document.getElementById("loginError").style.display = "none";
 }
 
-function escapeHTML(text){
-  return text
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
+function escapeHTML(text) {
+  return text.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
 }
 
 document.getElementById("password").addEventListener("keydown", function(e){
   if(e.key === "Enter") loginUser();
 });
 
-/* =====================================================
-   "BLOKADA" NARZĘDZI DEWELOPERSKICH
-   UWAGA: to tylko utrudnienie, NIE zabezpieczenie.
-   Da się to ominąć na kilka sposobów (m.in. podglądem
-   źródła strony Ctrl+U, pobraniem pliku, wyłączeniem JS,
-   dokowaniem DevTools w osobnym oknie). Prawdziwej
-   ochrony danych to nie zapewnia.
-   ===================================================== */
+/* BLOKADA NARZĘDZI DEWELOPERSKICH (Do testów przez testmef) */
 (function(){
   const THRESHOLD = 160;
-  const DEVTOOLS_LIMIT = 5; // po ilu próbach pokazujemy stronę ostrzegawczą
+  const DEVTOOLS_LIMIT = 5;
   let cooldown = false;
 
   function getAttempts(){
-    try{ return parseInt(sessionStorage.getItem("dtAttempts") || "0", 10); }
-    catch(e){ return 0; }
+    try{ return parseInt(sessionStorage.getItem("dtAttempts") || "0", 10); } catch(e){ return 0; }
   }
   function setAttempts(n){
     try{ sessionStorage.setItem("dtAttempts", String(n)); }catch(e){}
@@ -464,7 +690,6 @@ document.getElementById("password").addEventListener("keydown", function(e){
   function kick(){
     if(cooldown) return;
     cooldown = true;
-
     const attempts = getAttempts() + 1;
     setAttempts(attempts);
 
@@ -477,27 +702,20 @@ document.getElementById("password").addEventListener("keydown", function(e){
     }
   }
 
-  // wykrywanie po różnicy rozmiaru okna (DevTools zadokowane)
   setInterval(function(){
     const widthDiff = window.outerWidth - window.innerWidth;
     const heightDiff = window.outerHeight - window.innerHeight;
-    if(widthDiff > THRESHOLD || heightDiff > THRESHOLD){
-      kick();
-    }
+    if(widthDiff > THRESHOLD || heightDiff > THRESHOLD) kick();
   }, 500);
 
-  // pułapka na "debugger" (spowalnia otwarte DevTools)
   setInterval(function(){
     const start = performance.now();
     // eslint-disable-next-line no-debugger
     debugger;
     const diff = performance.now() - start;
-    if(diff > 100){
-      kick();
-    }
+    if(diff > 100) kick();
   }, 1000);
 
-  // blokada prawego przycisku myszy i skrótów do DevTools
   document.addEventListener("contextmenu", e => e.preventDefault());
   document.addEventListener("keydown", function(e){
     const key = e.key ? e.key.toUpperCase() : "";
