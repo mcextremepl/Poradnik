@@ -3,266 +3,668 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel Administratora</title>
+    <title>MCEXTREME.PL — Panel</title>
 
     <style>
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: Arial, Helvetica, sans-serif;
+            font-family: Inter, Arial, sans-serif;
         }
 
         body {
             min-height: 100vh;
             background:
-                radial-gradient(circle at top left, #252b55 0%, transparent 35%),
-                radial-gradient(circle at bottom right, #171b38 0%, transparent 40%),
-                #090b14;
-            color: white;
+                radial-gradient(circle at 10% 10%, #27245c 0, transparent 35%),
+                radial-gradient(circle at 90% 90%, #142b4c 0, transparent 35%),
+                #080a12;
+            color: #fff;
             display: flex;
             justify-content: center;
             align-items: center;
+            padding: 20px;
         }
 
-        .container {
-            width: 390px;
-            padding: 35px;
-            border: 1px solid rgba(255,255,255,.12);
+        .box {
+            width: 100%;
+            max-width: 430px;
+            background: rgba(18, 21, 35, .92);
+            border: 1px solid rgba(255,255,255,.1);
             border-radius: 24px;
-            background: rgba(20,23,38,.88);
-            box-shadow: 0 25px 70px rgba(0,0,0,.5);
-            backdrop-filter: blur(15px);
+            padding: 32px;
+            box-shadow: 0 25px 80px rgba(0,0,0,.5);
+            backdrop-filter: blur(20px);
         }
 
         .logo {
-            width: 65px;
-            height: 65px;
+            width: 70px;
+            height: 70px;
             margin: 0 auto 20px;
-            border-radius: 18px;
+            border-radius: 20px;
             display: flex;
-            justify-content: center;
             align-items: center;
-            background: linear-gradient(135deg, #6d5dfc, #8b7cff);
-            font-size: 28px;
-            box-shadow: 0 10px 30px rgba(109,93,252,.35);
+            justify-content: center;
+            font-size: 32px;
+            background: linear-gradient(135deg,#6257ff,#8b7fff);
+            box-shadow: 0 10px 35px rgba(98,87,255,.35);
         }
 
         h1 {
             text-align: center;
             font-size: 25px;
-            margin-bottom: 8px;
+            margin-bottom: 7px;
         }
 
         .subtitle {
             text-align: center;
-            color: #969bb5;
+            color: #8f95ad;
             font-size: 14px;
             margin-bottom: 28px;
         }
 
         label {
             display: block;
-            margin: 15px 0 7px;
-            color: #cdd0df;
+            color: #c7cad8;
             font-size: 13px;
+            margin: 15px 0 7px;
         }
 
         input {
             width: 100%;
             padding: 14px;
-            border: 1px solid #30354f;
+            background: #0d101b;
+            color: #fff;
+            border: 1px solid #2c3148;
             border-radius: 11px;
             outline: none;
-            background: #101321;
-            color: white;
             font-size: 14px;
-            transition: .2s;
         }
 
         input:focus {
-            border-color: #7165ff;
-            box-shadow: 0 0 0 3px rgba(113,101,255,.12);
+            border-color: #7065ff;
+            box-shadow: 0 0 0 3px rgba(112,101,255,.12);
         }
 
         button {
             width: 100%;
-            border: none;
-            border-radius: 11px;
             padding: 14px;
             margin-top: 20px;
+            border: 0;
+            border-radius: 11px;
+            background: linear-gradient(135deg,#6559ff,#8277ff);
+            color: #fff;
+            font-weight: 700;
             cursor: pointer;
-            color: white;
-            font-weight: bold;
-            font-size: 14px;
-            background: linear-gradient(135deg, #6658f6, #8275ff);
             transition: .2s;
         }
 
         button:hover {
             transform: translateY(-1px);
-            box-shadow: 0 8px 25px rgba(102,88,246,.3);
+            box-shadow: 0 8px 25px rgba(101,89,255,.3);
+        }
+
+        .secondary {
+            background: #24283a;
+        }
+
+        .danger {
+            background: #3a2027;
         }
 
         .error {
             display: none;
             margin-top: 15px;
             padding: 11px;
-            border-radius: 9px;
+            border-radius: 10px;
+            background: rgba(255,70,70,.1);
+            color: #ff8f8f;
             text-align: center;
             font-size: 13px;
-            color: #ff8e8e;
-            background: rgba(255,70,70,.08);
         }
 
-        #adminPanel {
+        .success {
+            display: none;
+            margin-top: 15px;
+            padding: 11px;
+            border-radius: 10px;
+            background: rgba(70,255,150,.08);
+            color: #7cffb0;
+            text-align: center;
+            font-size: 13px;
+        }
+
+        #adminPanel,
+        #createPanel {
             display: none;
         }
 
-        .welcome {
-            padding: 16px;
+        .user-card {
+            background: #0d101b;
+            border: 1px solid #292e44;
             border-radius: 12px;
-            background: #101321;
-            border: 1px solid #292e47;
-            margin-bottom: 18px;
+            padding: 14px;
+            margin-top: 10px;
+        }
+
+        .user-card strong {
+            display: block;
+            font-size: 15px;
+        }
+
+        .user-card span {
+            display: block;
+            color: #858ba3;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        .welcome {
+            padding: 15px;
+            border-radius: 12px;
+            background: #0d101b;
+            border: 1px solid #292e44;
+            margin-bottom: 10px;
         }
 
         .welcome small {
-            color: #858ba5;
+            color: #858ba3;
         }
 
         .welcome strong {
             display: block;
-            margin-top: 5px;
-            font-size: 18px;
+            margin-top: 4px;
         }
 
-        .logout {
-            background: #24283b;
-            margin-top: 10px;
-        }
-
-        .logout:hover {
-            box-shadow: none;
+        .section-title {
+            margin-top: 25px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #cdd0df;
         }
 
         .footer {
             text-align: center;
-            color: #555b75;
+            color: #50566d;
             font-size: 11px;
-            margin-top: 20px;
+            margin-top: 22px;
         }
     </style>
 </head>
 
 <body>
 
-    <!-- LOGOWANIE -->
-    <div class="container" id="loginPanel">
+<!-- =====================================================
+     KONTA
+     TUTAJ DODAJESZ NOWE LOGINY
+     
+     admin: true  = administrator
+     admin: false = zwykły użytkownik
 
-        <div class="logo">🔐</div>
+     Login nie rozróżnia wielkości liter:
+     Admin1 = admin1 = ADMIN1
+     ===================================================== -->
 
-        <h1>Panel Administratora</h1>
-        <p class="subtitle">Zaloguj się, aby kontynuować</p>
+<script>
+const USERS = [
+    {
+        login: "Admin1",
+        password: "admin1nve",
+        admin: true
+    },
 
-        <label for="login">Login</label>
-        <input
-            id="login"
-            type="text"
-            placeholder="Wpisz login"
-            autocomplete="off"
-        >
+    // PRZYKŁAD:
+    // {
+    //     login: "Support1",
+    //     password: "haslo123",
+    //     admin: false
+    // },
 
-        <label for="password">Hasło</label>
-        <input
-            id="password"
-            type="password"
-            placeholder="Wpisz hasło"
-        >
+    // KOLEJNE KONTA DODAWAJ TUTAJ
+];
+</script>
 
-        <button onclick="loginUser()">ZALOGUJ SIĘ</button>
 
-        <div class="error" id="error">
-            Nieprawidłowy login lub hasło.
-        </div>
+<!-- ================= LOGOWANIE ================= -->
 
-        <div class="footer">
-            Panel administracyjny
-        </div>
+<div class="box" id="loginPanel">
+
+    <div class="logo">🔐</div>
+
+    <h1>MCEXTREME.PL</h1>
+    <p class="subtitle">Panel dostępu</p>
+
+    <label for="login">Login</label>
+    <input
+        id="login"
+        type="text"
+        placeholder="Wpisz login"
+        autocomplete="username"
+    >
+
+    <label for="password">Hasło</label>
+    <input
+        id="password"
+        type="password"
+        placeholder="Wpisz hasło"
+        autocomplete="current-password"
+    >
+
+    <button onclick="loginUser()">
+        ZALOGUJ SIĘ
+    </button>
+
+    <div class="error" id="loginError">
+        Nieprawidłowy login lub hasło.
     </div>
 
-
-    <!-- PANEL ADMINA -->
-    <div class="container" id="adminPanel">
-
-        <div class="logo">👑</div>
-
-        <h1>Panel Administratora</h1>
-        <p class="subtitle">Zarządzanie systemem</p>
-
-        <div class="welcome">
-            <small>Zalogowano jako</small>
-            <strong>Admin1</strong>
-        </div>
-
-        <button onclick="createLogins()">
-            STWÓRZ LOGINY
-        </button>
-
-        <button class="logout" onclick="logout()">
-            WYLOGUJ SIĘ
-        </button>
-
-        <div class="footer">
-            Panel administracyjny
-        </div>
+    <div class="footer">
+        MCEXTREME.PL
     </div>
 
+</div>
 
-    <script>
-        /*
-         * DEMO:
-         * To nie jest bezpieczny system logowania.
-         * Na GitHub Pages dane użyte przez JavaScript
-         * mogą zostać odczytane przez użytkownika.
-         */
 
-        function loginUser() {
-            const login = document.getElementById("login").value;
-            const password = document.getElementById("password").value;
-            const error = document.getElementById("error");
+<!-- ================= PANEL ADMINA ================= -->
 
-            // DEMONSTRACYJNE dane logowania
-            if (login === "Admin1" && password === "admin1nve") {
+<div class="box" id="adminPanel">
 
-                document.getElementById("loginPanel").style.display = "none";
-                document.getElementById("adminPanel").style.display = "block";
+    <div class="logo">👑</div>
 
-                error.style.display = "none";
+    <h1>Panel Administratora</h1>
+    <p class="subtitle">Zarządzanie użytkownikami</p>
 
-            } else {
-                error.style.display = "block";
-            }
+    <div class="welcome">
+        <small>Zalogowano jako</small>
+        <strong id="loggedUser"></strong>
+    </div>
+
+    <button onclick="showCreatePanel()">
+        STWÓRZ LOGIN
+    </button>
+
+    <div class="section-title">
+        Istniejące konta
+    </div>
+
+    <div id="usersList"></div>
+
+    <button class="secondary" onclick="logout()">
+        WYLOGUJ SIĘ
+    </button>
+
+    <div class="footer">
+        Panel administratora
+    </div>
+
+</div>
+
+
+<!-- ================= TWORZENIE LOGINU ================= -->
+
+<div class="box" id="createPanel">
+
+    <div class="logo">➕</div>
+
+    <h1>Nowy użytkownik</h1>
+    <p class="subtitle">Dodaj konto do systemu</p>
+
+    <label for="newLogin">Login</label>
+    <input
+        id="newLogin"
+        type="text"
+        placeholder="Np. Support1"
+    >
+
+    <label for="newPassword">Hasło</label>
+    <input
+        id="newPassword"
+        type="password"
+        placeholder="Hasło użytkownika"
+    >
+
+    <label for="newAdmin">
+        Typ konta
+    </label>
+
+    <select id="newAdmin" style="
+        width:100%;
+        padding:14px;
+        border-radius:11px;
+        border:1px solid #2c3148;
+        background:#0d101b;
+        color:white;
+        outline:none;
+    ">
+        <option value="false">Użytkownik</option>
+        <option value="true">Administrator</option>
+    </select>
+
+    <button onclick="createUser()">
+        UTWÓRZ KONTO
+    </button>
+
+    <button class="secondary" onclick="showAdminPanel()">
+        WRÓĆ
+    </button>
+
+    <div class="error" id="createError"></div>
+    <div class="success" id="createSuccess"></div>
+
+    <div class="footer">
+        Nowe konto zostanie dodane do bieżącej sesji.
+    </div>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   ZMIENNE
+   ===================================================== */
+
+let currentUser = null;
+
+
+/* =====================================================
+   LOGOWANIE
+   ===================================================== */
+
+function loginUser() {
+
+    const loginInput =
+        document.getElementById("login").value.trim();
+
+    const passwordInput =
+        document.getElementById("password").value;
+
+    const loginLower =
+        loginInput.toLowerCase();
+
+    const user = USERS.find(u =>
+        u.login.toLowerCase() === loginLower &&
+        u.password === passwordInput
+    );
+
+    const error =
+        document.getElementById("loginError");
+
+    if (!user) {
+
+        error.style.display = "block";
+
+        return;
+    }
+
+    error.style.display = "none";
+
+    currentUser = user;
+
+    document.getElementById("loginPanel")
+        .style.display = "none";
+
+    if (user.admin) {
+
+        document.getElementById("adminPanel")
+            .style.display = "block";
+
+        document.getElementById("loggedUser")
+            .textContent = user.login;
+
+        updateUsersList();
+
+    } else {
+
+        alert(
+            "Zalogowano jako " +
+            user.login
+        );
+
+    }
+}
+
+
+/* =====================================================
+   LISTA UŻYTKOWNIKÓW
+   ===================================================== */
+
+function updateUsersList() {
+
+    const list =
+        document.getElementById("usersList");
+
+    list.innerHTML = "";
+
+    USERS.forEach(user => {
+
+        const card =
+            document.createElement("div");
+
+        card.className = "user-card";
+
+        card.innerHTML = `
+            <strong>${escapeHTML(user.login)}</strong>
+            <span>
+                ${user.admin
+                    ? "👑 Administrator"
+                    : "👤 Użytkownik"}
+            </span>
+        `;
+
+        list.appendChild(card);
+    });
+}
+
+
+/* =====================================================
+   OTWÓRZ TWORZENIE KONTA
+   ===================================================== */
+
+function showCreatePanel() {
+
+    if (!currentUser || !currentUser.admin) {
+        return;
+    }
+
+    document.getElementById("adminPanel")
+        .style.display = "none";
+
+    document.getElementById("createPanel")
+        .style.display = "block";
+
+    clearMessages();
+}
+
+
+/* =====================================================
+   WRÓĆ DO PANELU ADMINA
+   ===================================================== */
+
+function showAdminPanel() {
+
+    document.getElementById("createPanel")
+        .style.display = "none";
+
+    document.getElementById("adminPanel")
+        .style.display = "block";
+
+    updateUsersList();
+}
+
+
+/* =====================================================
+   TWORZENIE KONTA
+   ===================================================== */
+
+function createUser() {
+
+    if (!currentUser || !currentUser.admin) {
+        return;
+    }
+
+    const login =
+        document.getElementById("newLogin")
+            .value.trim();
+
+    const password =
+        document.getElementById("newPassword")
+            .value;
+
+    const isAdmin =
+        document.getElementById("newAdmin")
+            .value === "true";
+
+    const error =
+        document.getElementById("createError");
+
+    const success =
+        document.getElementById("createSuccess");
+
+    error.style.display = "none";
+    success.style.display = "none";
+
+
+    /* Sprawdzenie loginu */
+
+    if (login.length < 3) {
+
+        error.textContent =
+            "Login musi mieć minimum 3 znaki.";
+
+        error.style.display = "block";
+
+        return;
+    }
+
+
+    /* Sprawdzenie hasła */
+
+    if (password.length < 4) {
+
+        error.textContent =
+            "Hasło musi mieć minimum 4 znaki.";
+
+        error.style.display = "block";
+
+        return;
+    }
+
+
+    /* Sprawdzenie czy konto już istnieje */
+
+    const exists = USERS.some(user =>
+        user.login.toLowerCase() === login.toLowerCase()
+    );
+
+    if (exists) {
+
+        error.textContent =
+            "Taki login już istnieje.";
+
+        error.style.display = "block";
+
+        return;
+    }
+
+
+    /* Dodanie użytkownika */
+
+    USERS.push({
+        login: login,
+        password: password,
+        admin: isAdmin
+    });
+
+
+    success.textContent =
+        "Konto " + login + " zostało utworzone.";
+
+    success.style.display = "block";
+
+
+    /* Wyczyszczenie formularza */
+
+    document.getElementById("newLogin")
+        .value = "";
+
+    document.getElementById("newPassword")
+        .value = "";
+
+    updateUsersList();
+}
+
+
+/* =====================================================
+   WYLOGOWANIE
+   ===================================================== */
+
+function logout() {
+
+    currentUser = null;
+
+    document.getElementById("adminPanel")
+        .style.display = "none";
+
+    document.getElementById("createPanel")
+        .style.display = "none";
+
+    document.getElementById("loginPanel")
+        .style.display = "block";
+
+    document.getElementById("login")
+        .value = "";
+
+    document.getElementById("password")
+        .value = "";
+
+    clearMessages();
+}
+
+
+/* =====================================================
+   CZYSZCZENIE KOMUNIKATÓW
+   ===================================================== */
+
+function clearMessages() {
+
+    document.getElementById("createError")
+        .style.display = "none";
+
+    document.getElementById("createSuccess")
+        .style.display = "none";
+}
+
+
+/* =====================================================
+   ZABEZPIECZENIE WYŚWIETLANIA LOGINÓW
+   ===================================================== */
+
+function escapeHTML(text) {
+
+    return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+
+/* =====================================================
+   ENTER = LOGOWANIE
+   ===================================================== */
+
+document.getElementById("password")
+    .addEventListener("keydown", function(event) {
+
+        if (event.key === "Enter") {
+            loginUser();
         }
 
-        function createLogins() {
-            alert("Panel tworzenia loginów zostanie tutaj dodany.");
-        }
+    });
 
-        function logout() {
-            document.getElementById("adminPanel").style.display = "none";
-            document.getElementById("loginPanel").style.display = "block";
-
-            document.getElementById("login").value = "";
-            document.getElementById("password").value = "";
-        }
-
-        document.getElementById("password").addEventListener("keydown", function(event) {
-            if (event.key === "Enter") {
-                loginUser();
-            }
-        });
-    </script>
+</script>
 
 </body>
 </html>
