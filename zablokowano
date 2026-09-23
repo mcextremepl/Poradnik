@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>MCEXTREME.PL — Zablokowano</title>
+<style>
+  :root{
+    --panel:rgba(20,8,10,.92);
+    --border:rgba(255,80,80,.18);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;font-family:Inter,Arial,sans-serif;}
+  html,body{height:100%;}
+  body{
+    min-height:100vh;
+    background:
+      radial-gradient(circle at 10% 10%, #4a0d0d 0, transparent 40%),
+      radial-gradient(circle at 90% 90%, #3a1006 0, transparent 40%),
+      #0a0303;
+    color:#fff;
+    display:flex;justify-content:center;align-items:center;
+    padding:20px;
+  }
+  .box{
+    width:100%;max-width:430px;
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:24px;
+    padding:32px;
+    box-shadow:0 25px 80px rgba(0,0,0,.6), 0 0 60px rgba(255,50,50,.1);
+    backdrop-filter:blur(20px);
+    text-align:center;
+    animation:fadeIn .35s ease;
+  }
+  @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+  .icon{
+    width:86px;height:86px;margin:0 auto 18px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;font-size:40px;
+    background:radial-gradient(circle,#ff3b3b,#5c0000);
+    animation:shake .5s ease, pop .4s ease;
+  }
+  @keyframes pop{0%{transform:scale(0);opacity:0}70%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}
+  @keyframes shake{
+    0%,100%{transform:translateX(0)}
+    20%{transform:translateX(-8px)}
+    40%{transform:translateX(8px)}
+    60%{transform:translateX(-6px)}
+    80%{transform:translateX(6px)}
+  }
+  h1{font-size:24px;color:#ff5c5c;margin-bottom:12px;}
+  p{color:#e8c9c9;font-size:14px;line-height:1.6;margin-bottom:8px;}
+  #countdown{color:#ffab8a;font-weight:700;}
+  button{
+    width:100%;padding:14px;margin-top:20px;border:0;border-radius:11px;
+    background:linear-gradient(135deg,#ff3b3b,#ff7a4a);
+    color:#fff;font-weight:700;cursor:pointer;transition:.2s;
+    display:none;
+  }
+  button:hover{transform:translateY(-1px);box-shadow:0 8px 25px rgba(255,59,59,.35);}
+  .footer{text-align:center;color:#5c3535;font-size:11px;margin-top:22px;}
+</style>
+</head>
+<body>
+
+<div class="box">
+  <div class="icon">🚫</div>
+  <h1>Czemu próbujesz się włamać??</h1>
+  <p>Wykryto podejrzaną aktywność (zbyt wiele prób logowania lub próby otwarcia narzędzi deweloperskich).</p>
+  <p>Dostęp zostanie przywrócony za <span id="countdown">15</span> s.</p>
+  <button id="backBtn" onclick="goBack()">WRÓĆ DO LOGOWANIA</button>
+  <div class="footer">MCEXTREME.PL</div>
+</div>
+
+<script>
+  // Nazwa/ścieżka strony logowania — musi leżeć w tym samym folderze.
+  const LOGIN_PAGE = "panel.html";
+
+  let secondsLeft = 15;
+  const countdownEl = document.getElementById("countdown");
+  const backBtn = document.getElementById("backBtn");
+
+  const timer = setInterval(() => {
+    secondsLeft--;
+    countdownEl.textContent = secondsLeft;
+    if(secondsLeft <= 0){
+      clearInterval(timer);
+      countdownEl.parentElement.style.display = "none";
+      backBtn.style.display = "block";
+    }
+  }, 1000);
+
+  function goBack(){
+    window.location.href = LOGIN_PAGE;
+  }
+</script>
+
+</body>
+</html>
