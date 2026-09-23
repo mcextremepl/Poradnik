@@ -44,6 +44,28 @@
     background:linear-gradient(135deg,#ff3b3b,#ff8a5c);
     box-shadow:0 10px 35px rgba(255,59,59,.35);
   }
+  .brand-row{
+    display:flex;align-items:center;justify-content:center;gap:12px;
+    margin-bottom:6px;
+  }
+  .pixel-heart{
+    width:46px;height:46px;flex-shrink:0;
+    filter:drop-shadow(0 0 10px rgba(255,50,50,.55));
+    animation:heartbeat 1.4s ease-in-out infinite;
+  }
+  @keyframes heartbeat{
+    0%,100%{transform:scale(1);}
+    15%{transform:scale(1.16);}
+    30%{transform:scale(.96);}
+    45%{transform:scale(1.1);}
+    60%{transform:scale(1);}
+  }
+  .brand-text{text-align:left;}
+  .brand-text h1{font-size:22px;letter-spacing:.3px;margin:0;line-height:1.15;
+    background:linear-gradient(135deg,#ff5c5c,#ff9a5c);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .brand-text .brand-sub{font-size:11px;color:#c99;letter-spacing:1.5px;text-transform:uppercase;margin-top:2px;}
   h1{text-align:center;font-size:25px;margin-bottom:7px;letter-spacing:.3px;}
   .subtitle{text-align:center;color:var(--muted);font-size:14px;margin-bottom:28px;}
   label{display:block;color:#e8c9c9;font-size:13px;margin:15px 0 7px;}
@@ -238,7 +260,7 @@
    serwera (backend + baza danych), nie samego HTML/JS.
    ===================================================== */
 const ENCODED_USERS =
-"W3sibG9naW4iOiAiQWRtaW4xIiwgInBhc3N3b3JkIjogImFkbWluMW52ZSIsICJhZG1pbiI6IHRydWV9LCB7ImxvZ2luIjogIm52ZWlzayIsICJwYXNzd29yZCI6ICJHaWNOTmw5MEVZU2NWNWYyIiwgImFkbWluIjogZmFsc2V9LCB7ImxvZ2luIjogIncxZWxvbyIsICJwYXNzd29yZCI6ICJYazkydFFtUnBMNXZOYzNCIiwgImFkbWluIjogZmFsc2V9LCB7ImxvZ2luIjogImRva25lcyIsICJwYXNzd29yZCI6ICJSdDdmV25LcFhtNExkOVFhIiwgImFkbWluIjogZmFsc2V9LCB7ImxvZ2luIjogInhrcmVka2EiLCAicGFzc3dvcmQiOiAiVmIzblpxOFRrUHc1Um1YYyIsICJhZG1pbiI6IGZhbHNlfSwgeyJsb2dpbiI6ICJzaW0wbmVrayIsICJwYXNzd29yZCI6ICJKZjZtUXIyV25UazlCcExjIiwgImFkbWluIjogZmFsc2V9LCB7ImxvZ2luIjogInZpcGVyZWsiLCAicGFzc3dvcmQiOiAiTnE0eFJ0N1ZtWmszUHdYZCIsICJhZG1pbiI6IGZhbHNlfSwgeyJsb2dpbiI6ICJsaXdrYSIsICJwYXNzd29yZCI6ICJLcDlXbVRyNU5jUXoyVmZiIiwgImFkbWluIjogZmFsc2V9LCB7ImxvZ2luIjogIkltYWdlIiwgInBhc3N3b3JkIjogIkh0M21ScThYd1BuNkxrVmMiLCAiYWRtaW4iOiBmYWxzZX1d";
+"W3sibG9naW4iOiAiQWRtaW4xIiwgInBhc3N3b3JkIjogImFkbWluMW52ZSIsICJhZG1pbiI6IHRydWV9LCB7ImxvZ2luIjogIm52ZWlzayIsICJwYXNzd29yZCI6ICJHaWNOTmw5MEVZU2NWNWYyIiwgImFkbWluIjogZmFsc2V9LCB7ImxvZ2luIjogIncxZWxvbyIsICJwYXNzd29yZCI6ICJYazkydFFtUnBMNXZOYzNCIiwgImFkbWluIjogZmFsc2V9LCB7ImxvZ2luIjogImRva25lcyIsICJwYXNzd29yZCI6ICJSdDdmV25LcFhtNExkOVFhIiwgImFkbWluIjogZmFsc2V9LCB7ImxvZ2luIjogInhrcmVka2EiLCAicGFzc3dvcmQiOiAiVmIzblpxOFRrUHc1Um1YYyIsICJhZG1pbiI6IGZhbHNlfSwgeyJsb2dpbiI6ICJzaW0wbmVrayIsICJwYXNzd29yZCI6ICJKZjZtUXIyV25UazlCcExjIiwgImFkbWluIjogZmFsc2V9LCB7ImxvZ2luIjogInZpcGVyZWsiLCAicGFzc3dvcmQiOiAiTnE0eFJ0N1ZtWmszUHdYZCIsICJhZG1pbiI6IGZhbHNlfSwgeyJsb2dpbiI6ICJsaXdrYSIsICJwYXNzd29yZCI6ICJLcDlXbVRyNU5jUXoyVmZiIiwgImFkbWluIjogZmFsc2V9LCB7ImxvZ2luIjogIkltYWdlIiwgInBhc3N3b3JkIjogIkh0M21ScThYd1BuNkxrVmMiLCAiYWRtaW4iOiBmYWxzZX0sIHsibG9naW4iOiAidGVzdG1lZiIsICJwYXNzd29yZCI6ICJ0ZXN0b3dlaGFzbG8iLCAiYWRtaW4iOiBmYWxzZSwgInRlc3QiOiB0cnVlfV0=";
 
 function decodeUsers(){
   try{
