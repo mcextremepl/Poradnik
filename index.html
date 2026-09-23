@@ -6,7 +6,7 @@
 <title>MCEXTREME.PL — Panel</title>
 <!-- Google Fonts: Poppins -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<!-- Phosphor Icons (Nowoczesne ikony zamiast emotek) -->
+<!-- Phosphor Icons -->
 <script src="https://unpkg.com/@phosphor-icons/web"></script>
 <style>
   :root {
@@ -45,7 +45,6 @@
     overflow: hidden;
   }
 
-  /* Efekt siatki w tle */
   body::before {
     content: '';
     position: absolute;
@@ -236,7 +235,6 @@
 
   #adminPanel, #createPanel, #welcomePanel, #testPanel { display: none; }
 
-  /* Lista użytkowników */
   .section-title {
     margin: 30px 0 15px;
     font-size: 13px;
@@ -281,9 +279,6 @@
     margin-top: 4px;
   }
 
-  .user-card .role-icon {
-    font-size: 14px;
-  }
   .role-admin { color: #ffb347; }
   .role-user { color: #64b5f6; }
 
@@ -296,7 +291,7 @@
     letter-spacing: 2px;
   }
 
-  /* Specjalny panel testera */
+  /* Sekcja instrukcji dla testera */
   .instructions-box {
     background: rgba(20, 20, 30, 0.5);
     border: 1px solid rgba(100, 150, 255, 0.2);
@@ -422,29 +417,29 @@
 
   <div class="instructions-box">
     <h3><i class="ph ph-target"></i> Misja Testowa</h3>
-    <p>System posiada podstawowe blokady DevTools. Twoim zadaniem jest sprawdzenie, czy dasz radę zbadac elementy strony mimo zabezpieczeń.</p>
+    <p>Sprawdź, czy uda Ci się zrealizować podgląd elementów strony i ominąć zabezpieczenia.</p>
     
     <ul class="shortcut-list">
       <li>
-        <span><i class="ph ph-terminal-window"></i> Konsola DevTools</span>
+        <span><i class="ph ph-code"></i> Pokaż źródło strony</span>
+        <kbd>Ctrl + U</kbd>
+      </li>
+      <li>
+        <span><i class="ph ph-terminal-window"></i> Otwórz DevTools</span>
         <kbd>F12</kbd>
       </li>
       <li>
-        <span><i class="ph ph-code"></i> Inspektor Elementów</span>
+        <span><i class="ph ph-brackets-angle"></i> Inspektor kodu</span>
         <kbd>Ctrl + Shift + I</kbd>
       </li>
       <li>
-        <span><i class="ph ph-cursor-click"></i> Wybór Elementu</span>
-        <kbd>Ctrl + Shift + C</kbd>
-      </li>
-      <li>
-        <span><i class="ph ph-mouse"></i> Menu Kontekstowe</span>
+        <span><i class="ph ph-mouse"></i> Menu kontekstowe</span>
         <span>PPM ➔ Zbadaj</span>
       </li>
     </ul>
 
     <div class="feedback-note">
-      <i class="ph ph-paper-plane-tilt"></i> <strong>Zadanie:</strong> Po testach, wyślij szczegółowy feedback do <strong>nve</strong> z informacją jakich metod użyłeś do obejścia skryptu.
+      <i class="ph ph-paper-plane-tilt"></i> <strong>Zadanie:</strong> Przeprowadź testy i prześlij pełny feedback do <strong>nve</strong> z informacją o wynikach.
     </div>
   </div>
 
@@ -575,7 +570,6 @@ function loginUser() {
     document.getElementById("loggedUser").textContent = user.login;
     updateUsersList();
   } else if (user.login.toLowerCase() === "testmef" || user.test) {
-    // SPECJALNY PANEL DLA TESTERA
     document.getElementById("testPanel").style.display = "block";
   } else {
     document.getElementById("welcomeUser").textContent = user.login;
@@ -674,7 +668,7 @@ document.getElementById("password").addEventListener("keydown", function(e){
   if(e.key === "Enter") loginUser();
 });
 
-/* BLOKADA NARZĘDZI DEWELOPERSKICH (Do testów przez testmef) */
+/* BLOKADA NARZĘDZI DEWELOPERSKICH */
 (function(){
   const THRESHOLD = 160;
   const DEVTOOLS_LIMIT = 5;
@@ -717,12 +711,22 @@ document.getElementById("password").addEventListener("keydown", function(e){
   }, 1000);
 
   document.addEventListener("contextmenu", e => e.preventDefault());
+
+  // OBSŁUGA KLAWISZY (NATYCHMIASTOWA BLOKADA DLA CTRL + U)
   document.addEventListener("keydown", function(e){
     const key = e.key ? e.key.toUpperCase() : "";
+
+    // Natychmiastowe przekierowanie po 1 kliknięciu Ctrl + U
+    if (e.ctrlKey && key === "U") {
+      e.preventDefault();
+      showBlockPanel();
+      return;
+    }
+
+    // Pozostałe skróty z naliczaniem prób
     if(
       key === "F12" ||
-      (e.ctrlKey && e.shiftKey && (key === "I" || key === "J" || key === "C")) ||
-      (e.ctrlKey && key === "U")
+      (e.ctrlKey && e.shiftKey && (key === "I" || key === "J" || key === "C"))
     ){
       e.preventDefault();
       kick();
