@@ -68,7 +68,27 @@
     display:none;margin-top:15px;padding:11px;border-radius:10px;
     background:rgba(70,255,150,.08);color:#7cffb0;text-align:center;font-size:13px;
   }
-  #adminPanel,#createPanel,#welcomePanel{display:none;}
+  #adminPanel,#createPanel,#welcomePanel,#blockPanel{display:none;}
+.block-box{
+  text-align:center;padding:10px;
+}
+.block-icon{
+  width:86px;height:86px;margin:0 auto 18px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:40px;
+  background:radial-gradient(circle,#ff3b3b,#5c0000);
+  animation:shake .5s ease, pop .4s ease;
+}
+@keyframes shake{
+  0%,100%{transform:translateX(0)}
+  20%{transform:translateX(-8px)}
+  40%{transform:translateX(8px)}
+  60%{transform:translateX(-6px)}
+  80%{transform:translateX(6px)}
+}
+.block-title{
+  font-size:24px;font-weight:800;color:#ff5c5c;margin-bottom:10px;
+}
+.block-sub{color:#e8c9c9;font-size:14px;line-height:1.6;margin-bottom:20px;}
   .user-card{
     background:#160707;border:1px solid #3a1414;border-radius:12px;
     padding:14px;margin-top:10px;display:flex;justify-content:space-between;align-items:center;
@@ -145,6 +165,16 @@
   <div class="error" id="loginError">Nieprawidłowy login lub hasło.</div>
 
   <div class="footer">MCEXTREME.PL</div>
+</div>
+
+<!-- ============== BLOKADA ZA SPAM ============== -->
+<div class="box" id="blockPanel">
+  <div class="block-box">
+    <div class="block-icon">🚫</div>
+    <div class="block-title">Czemu próbujesz się włamać??</div>
+    <p class="block-sub">Wykryto zbyt wiele prób logowania w krótkim czasie. Dostęp został tymczasowo zablokowany.</p>
+    <button onclick="unblock()">WRÓĆ DO LOGOWANIA</button>
+  </div>
 </div>
 
 <!-- ============== POWITANIE (zwykły user) ============== -->
@@ -233,8 +263,48 @@ function decodeUsers(){
 let USERS = decodeUsers();
 let currentUser = null;
 
+/* =====================================================
+   ANTY-SPAM — ochrona przed szybkim klikaniem
+   (podstawowa, tylko po stronie przeglądarki)
+   ===================================================== */
+let attemptTimestamps = [];
+const SPAM_LIMIT = 5;        // ile prób
+const SPAM_WINDOW_MS = 2500; // w jakim czasie (ms)
+const BLOCK_DURATION_MS = 15000; // jak długo blokujemy
+
+function registerAttempt(){
+  const now = Date.now();
+  attemptTimestamps.push(now);
+  attemptTimestamps = attemptTimestamps.filter(t => now - t <= SPAM_WINDOW_MS);
+
+  if(attemptTimestamps.length >= SPAM_LIMIT){
+    showBlockPanel();
+    return false;
+  }
+  return true;
+}
+
+function showBlockPanel(){
+  document.getElementById("loginPanel").style.display = "none";
+  document.getElementById("welcomePanel").style.display = "none";
+  document.getElementById("adminPanel").style.display = "none";
+  document.getElementById("createPanel").style.display = "none";
+  document.getElementById("blockPanel").style.display = "block";
+  attemptTimestamps = [];
+  setTimeout(unblock, BLOCK_DURATION_MS);
+}
+
+function unblock(){
+  document.getElementById("blockPanel").style.display = "none";
+  document.getElementById("loginPanel").style.display = "block";
+  document.getElementById("login").value = "";
+  document.getElementById("password").value = "";
+}
+
 /* ================= LOGOWANIE ================= */
 function loginUser(){
+  if(!registerAttempt()) return;
+
   const loginInput = document.getElementById("login").value.trim();
   const passwordInput = document.getElementById("password").value;
   const loginLower = loginInput.toLowerCase();
